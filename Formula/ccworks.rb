@@ -147,7 +147,7 @@ class Ccworks < Formula
       r.fetch
       wheel = scratch/File.basename(r.url)
       wheel.unlink if wheel.symlink? || wheel.exist?
-      FileUtils.ln_s(r.cached_download, wheel)
+      ln_s r.cached_download, wheel
       system libexec/"bin/python", "-m", "pip", "install", "--no-deps",
              "--no-build-isolation", "--disable-pip-version-check",
              wheel.to_s
