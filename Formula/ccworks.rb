@@ -3,8 +3,8 @@ class Ccworks < Formula
 
   desc "SAP Concur browser-automation and API helper"
   homepage "https://github.com/pu-orfe/ccworks"
-  url "https://github.com/pu-orfe/ccworks/archive/refs/tags/v0.1.1.tar.gz"
-  sha256 "cee8eb74476b14b3f7e4273bf2a428ea6360ae2d8f90f51b0e81537f11b8f221"
+  url "https://github.com/pu-orfe/ccworks/archive/refs/tags/v0.2.1.tar.gz"
+  sha256 "b3acecb480c3b5fb7a8a61af6a539181f018f7bff83a4b803ee0705871d73a58"
   license "MIT"
 
   depends_on "python@3.12"
@@ -172,7 +172,14 @@ class Ccworks < Formula
   end
 
   test do
-    output = shell_output("#{bin}/ccworks 2>&1", 2)
+    # A bare invocation prints the grouped command reference and exits 0.
+    # (This asserted exit 2 previously, which never matched the shipped CLI.)
+    output = shell_output("#{bin}/ccworks 2>&1")
     assert_match "usage:", output
+    assert_match "report list", output
+
+    # Retired flat names exit 2 and name their replacement.
+    legacy = shell_output("#{bin}/ccworks query-old 2>&1", 2)
+    assert_match "report list --historical", legacy
   end
 end
