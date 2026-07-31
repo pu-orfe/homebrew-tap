@@ -3,8 +3,8 @@ class Ccworks < Formula
 
   desc "SAP Concur browser-automation and API helper"
   homepage "https://github.com/pu-orfe/ccworks"
-  url "https://github.com/pu-orfe/ccworks/archive/refs/tags/v0.3.1.tar.gz"
-  sha256 "1b2bcbba4c9a1715d38c9b00dc28aced28941537fb710a4143c0a8c0334b16af"
+  url "https://github.com/pu-orfe/ccworks/archive/refs/tags/v0.3.2.tar.gz"
+  sha256 "d0665a082fccbbf778aab6d1d3bc3289e5429433184c85dc6dd80435aedaacbf"
   license "MIT"
 
   depends_on "python@3.12"
@@ -172,6 +172,11 @@ class Ccworks < Formula
   end
 
   test do
+    # The built artifact must report the version this formula claims. Catches a
+    # url/sha/version mismatch, which has happened: v0.1.1 shipped while the
+    # package metadata still said 0.1.0.
+    assert_equal "ccworks #{version}", shell_output("#{bin}/ccworks --version").strip
+
     # A bare invocation prints the grouped command reference and exits 0.
     # (This asserted exit 2 previously, which never matched the shipped CLI.)
     output = shell_output("#{bin}/ccworks 2>&1")
