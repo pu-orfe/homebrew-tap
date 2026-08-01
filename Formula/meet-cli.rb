@@ -3,16 +3,16 @@ class MeetCli < Formula
 
   desc "Companion CLI for the meet guest-speaker booking app"
   homepage "https://github.com/pu-orfe/meet"
-  # meet-cli lives in the cli/ subdirectory of the pu-orfe/meet monorepo, not
-  # a dedicated repo, so there's no tagged release archive yet (unlike
-  # ccworks.rb's `archive/refs/tags/vX.Y.Z.tar.gz` + sha256 pattern) to pin
-  # against. Pinning a git revision on the feature branch gives the same
-  # reproducibility guarantee in the meantime. Once cli-companion-phase1
-  # merges to main and a real `meet-cli-vX.Y.Z` tag is cut, switch this to a
-  # tagged tarball + sha256 to match the ccworks.rb convention.
+  # meet-cli lives in the cli/ subdirectory of the pu-orfe/meet monorepo, so
+  # there is no per-CLI release archive; the repo is also private, which rules
+  # out ccworks.rb's unauthenticated `archive/refs/tags/vX.Y.Z.tar.gz` + sha256
+  # pattern (that download 404s without credentials, whereas a git clone picks
+  # up the user's existing git auth). Pin a tag rather than a branch: this
+  # previously tracked the cli-companion-phase1 feature branch, which vanished
+  # when it merged and broke `brew install` outright.
   url "https://github.com/pu-orfe/meet.git",
-      branch: "cli-companion-phase1",
-      revision: "291cb4d178269a124594d09216c0754436f9838f"
+      tag:      "meet-cli-v0.1.0",
+      revision: "82a78753320c9f2911a27ac33ea5260efcaa9e0e"
   version "0.1.0"
   license "MIT"
 
