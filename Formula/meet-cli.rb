@@ -11,8 +11,8 @@ class MeetCli < Formula
   # previously tracked the cli-companion-phase1 feature branch, which vanished
   # when it merged and broke `brew install` outright.
   url "https://github.com/pu-orfe/meet.git",
-      tag:      "meet-cli-v0.1.6",
-      revision: "708ce7e1e88bff20dffd7f14c1aa7c25a5c9c422"
+      tag:      "meet-cli-v0.2.0",
+      revision: "3611a45ee91e1d6f08b481ff6caa6486c74234e2"
   license "MIT"
 
   depends_on "python@3.12"
