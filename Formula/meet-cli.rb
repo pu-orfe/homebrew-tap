@@ -13,7 +13,6 @@ class MeetCli < Formula
   url "https://github.com/pu-orfe/meet.git",
       tag:      "meet-cli-v0.1.4",
       revision: "0511db97ed1d773f17ebe365eecc4e932da3d6ad"
-  version "0.1.4"
   license "MIT"
 
   depends_on "python@3.12"
@@ -82,7 +81,7 @@ class MeetCli < Formula
       resource("hatchling"), resource("packaging"), resource("pathspec"),
       resource("pluggy"), resource("trove-classifiers"),
       resource("click"), resource("certifi"), resource("charset-normalizer"),
-      resource("idna"), resource("urllib3"), resource("requests"),
+      resource("idna"), resource("urllib3"), resource("requests")
     ]
 
     # meet-cli itself lives in the cli/ subdirectory of this monorepo checkout.
