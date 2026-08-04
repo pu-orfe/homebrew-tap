@@ -3,8 +3,8 @@ class Ccworks < Formula
 
   desc "SAP Concur browser-automation and API helper"
   homepage "https://github.com/pu-orfe/ccworks"
-  url "https://github.com/pu-orfe/ccworks/archive/refs/tags/v0.3.3.tar.gz"
-  sha256 "0fae442789d537d802512d606df0945af1b6624caeb32919d26f552e8beb2dd0"
+  url "https://github.com/pu-orfe/ccworks/archive/refs/tags/v0.4.0.tar.gz"
+  sha256 "e71fe5fa8566ae5dcd61531185edeb6453853643095bc37dbc7ac94d29bfbdf6"
   license "MIT"
 
   depends_on "python@3.12"
