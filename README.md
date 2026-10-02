@@ -20,7 +20,7 @@ brew "<formula>"
 
 | Formula | Description | Source |
 | --- | --- | --- |
-| [`ccworks`](./Formula/ccworks.rb) | SAP Concur browser-automation & API helper | https://github.com/pu-orfe/ccworks |
+| [`ccworks`](./Formula/ccworks.rb) | SAP Concur browser-automation & API helper | https://github.com/pu-shd/ccworks |
 
 ## Development
 
