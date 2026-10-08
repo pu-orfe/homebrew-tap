@@ -1,8 +1,8 @@
 class WifiWalk < Formula
   desc "Interactive Wi-Fi walk test: log signal, SNR, roams and APs to CSV"
   homepage "https://github.com/pu-shd/wifi-walk"
-  url "https://github.com/pu-shd/wifi-walk/archive/refs/tags/v1.1.1.tar.gz"
-  sha256 "d03ccd94d2761715aa3622a5203b5470ad31601ccd487dfb1b31258d2e647ed0"
+  url "https://github.com/pu-shd/wifi-walk/archive/refs/tags/v1.2.0.tar.gz"
+  sha256 "d754fb2c9e35d18166a6b40859efb5ccace320a0b5ae9db85dcb890c863346df"
   license "MIT"
 
   # Reads Wi-Fi state with macOS's wdutil and ipconfig.
