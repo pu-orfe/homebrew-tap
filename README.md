@@ -21,6 +21,7 @@ brew "<formula>"
 | Formula | Description | Source |
 | --- | --- | --- |
 | [`ccworks`](./Formula/ccworks.rb) | SAP Concur browser-automation & API helper | https://github.com/pu-shd/ccworks |
+| [`wifi-walk`](./Formula/wifi-walk.rb) | Interactive Wi-Fi walk test for macOS: signal, SNR, roams and APs to CSV | https://github.com/pu-shd/wifi-walk |
 
 ## Development
 
