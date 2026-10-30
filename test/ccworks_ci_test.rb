@@ -10,6 +10,13 @@ workflow = Psych.load_file((Pathname(__dir__).parent/".github/workflows/tests.ym
 job = workflow.fetch("jobs").fetch("test-bot")
 raise "Container scripts require an explicit Bash shell" if job.dig("defaults", "run", "shell") != "bash"
 
+job.fetch("steps").each do |item|
+  next unless item["run"]
+
+  expected_directory = "${{ steps.set-up-homebrew.outputs.repository-path }}"
+  raise "Run steps must use Homebrew's actual checkout" if item["working-directory"] != expected_directory
+end
+
 step = job.fetch("steps").find { |item| item["name"] == "Verify ccworks source install and bottle" }
 raise "Required verification step missing" unless step
 
