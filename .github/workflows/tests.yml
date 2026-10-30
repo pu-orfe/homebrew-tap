@@ -85,7 +85,7 @@ jobs:
         run: |
           set -euo pipefail
           if [[ "${CCWORKS_BUILD_DEPS_FROM_SOURCE:-false}" == "true" ]]; then
-            ccworks_dependencies="$(brew deps --include-build --recursive pu-orfe/tap/ccworks)"
+            ccworks_dependencies="$(brew deps --include-build --topological --full-name pu-orfe/tap/ccworks)"
             ccworks_source_dependencies=()
             while IFS= read -r dependency; do
               [[ -n "$dependency" ]] || continue
