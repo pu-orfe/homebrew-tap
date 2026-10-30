@@ -14,16 +14,34 @@ jobs:
         include:
           - os: ubuntu-latest
             container:
-              image: ghcr.io/homebrew/brew:main
+              image: ghcr.io/homebrew/brew@sha256:93ff4a1ce4caaf631497c1eeea0917ba1e1e7f0e1e8fe5025250c7e455152bdf
               options: --privileged
     runs-on: ${{ matrix.os }}
-    container: ${{ fromJSON(toJSON(matrix.container)) }} # zizmor: ignore[unpinned-images]
+    container: ${{ fromJSON(toJSON(matrix.container)) }}
     permissions:
       actions: read
       checks: read
       contents: read
       pull-requests: read
     steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect ccworks formula changes
+        id: changes
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          changed_files="$(git diff --name-only "$BASE_SHA" HEAD -- Formula/ccworks.rb)"
+          if [[ -n "$changed_files" ]]; then
+            echo "ccworks=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ccworks=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@5037c6f1012cc5ea0b9f03fedbaf9955ed9e51e0 # 2026.08.03.1
@@ -41,9 +59,33 @@ jobs:
 
       - run: brew test-bot --only-setup
 
+      - name: Test cached resource installation
+        run: brew ruby -- test/ccworks_install_test.rb
+
       - run: brew test-bot --only-tap-syntax
-      - run: brew test-bot --only-formulae
+      - run: brew test-bot --only-formulae --fail-fast
         if: github.event_name == 'pull_request'
+
+      # test-bot can skip missing dependency bottles and ignore install errors.
+      # A green job must also prove installation, tests and a produced bottle.
+      - name: Verify ccworks source install and bottle
+        if: steps.changes.outputs.ccworks == 'true'
+        run: |
+          set -euo pipefail
+          if brew list --versions pu-orfe/tap/ccworks >/dev/null 2>&1; then
+            brew uninstall --force --ignore-dependencies pu-orfe/tap/ccworks
+          fi
+          brew install --verbose --build-bottle pu-orfe/tap/ccworks
+          brew test --verbose pu-orfe/tap/ccworks
+          ccworks_metadata="$(brew info --json=v2 pu-orfe/tap/ccworks)"
+          ccworks_version="$(printf '%s' "$ccworks_metadata" | brew ruby -- -rjson -e 'puts JSON.parse(STDIN.read).fetch("formulae").first.fetch("versions").fetch("stable")')"
+          ccworks_pkg_version="$(printf '%s' "$ccworks_metadata" | brew ruby -- -rjson -e 'f=JSON.parse(STDIN.read).fetch("formulae").first; v=f.fetch("versions").fetch("stable"); r=f.fetch("revision"); puts(r.zero? ? v : "#{v}_#{r}")')"
+          test "$(ccworks --version)" = "ccworks $ccworks_version"
+          if ! compgen -G 'ccworks--*.bottle.json' >/dev/null; then
+            brew bottle --json --no-rebuild --root-url="https://github.com/pu-orfe/homebrew-tap/releases/download/ccworks-${ccworks_pkg_version}" pu-orfe/tap/ccworks
+          fi
+          compgen -G 'ccworks--*.bottle.json'
+          echo "PASS: ccworks source install, formula tests, version and bottle verified"
 
       - name: Upload bottles as artifact
         if: always() && github.event_name == 'pull_request'
