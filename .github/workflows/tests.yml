@@ -8,6 +8,9 @@ on:
 
 jobs:
   test-bot:
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
@@ -57,7 +60,10 @@ jobs:
       - run: brew test-bot --only-setup
 
       - name: Test cached resource installation
-        run: brew ruby -- test/ccworks_install_test.rb
+        run: |
+          set -euo pipefail
+          brew ruby -- test/ccworks_install_test.rb
+          brew ruby -- test/ccworks_ci_test.rb
 
       - run: brew test-bot --only-tap-syntax
       - run: brew test-bot --only-formulae --fail-fast
