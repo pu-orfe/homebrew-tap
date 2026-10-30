@@ -69,7 +69,8 @@ Dir.mktmpdir("ccworks-ci-test") do |temporary|
     raise "#{scenario} returned an incorrect status: #{output} #{error}" if status.success? != expected
     raise "Success must be explicit" if expected && output.exclude?("PASS: ccworks source install")
 
-    if scenario == "intel_success" && calls.read.exclude?("install --verbose --build-from-source openssl@3 python@3.12")
+    required = "install --verbose --build-from-source openssl@3 python@3.12"
+    if scenario == "intel_success" && calls.read.exclude?(required)
       raise "Intel must prebuild missing dependency bottles from source"
     end
 
