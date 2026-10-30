@@ -30,7 +30,9 @@ Dir.mktmpdir("ccworks-ci-test") do |temporary|
     set -euo pipefail
     printf '%s\n' "$*" >> "$TEST_CALLS"
     case "$1" in
-      deps) printf '%s\n' 'openssl@3' 'python@3.12' ;;
+      deps)
+        test "$*" = 'deps --include-build --topological --full-name pu-orfe/tap/ccworks'
+        printf '%s\n' 'openssl@3' 'python@3.12' ;;
       list) exit 1 ;;
       install)
         if [[ "$TEST_SCENARIO" == "install_failure" ]]; then exit 17; fi
