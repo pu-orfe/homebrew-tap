@@ -28,9 +28,13 @@ Dir.mktmpdir("ccworks-ci-test") do |temporary|
   (bin/"brew").write(<<~SH)
     #!/bin/bash
     set -euo pipefail
+    printf '%s\n' "$*" >> "$TEST_CALLS"
     case "$1" in
+      deps) printf '%s\n' 'openssl@3' 'python@3.12' ;;
       list) exit 1 ;;
-      install) if [[ "$TEST_SCENARIO" == "install_failure" ]]; then exit 17; fi ;;
+      install)
+        if [[ "$TEST_SCENARIO" == "install_failure" ]]; then exit 17; fi
+        if [[ "$TEST_SCENARIO" == "intel_dependency_failure" && "$*" == *--build-from-source* ]]; then exit 19; fi ;;
       test) if [[ "$TEST_SCENARIO" == "test_failure" ]]; then exit 18; fi ;;
       info) printf '%s' '{"formulae":[{"versions":{"stable":"0.7.0"},"revision":1}]}' ;;
       ruby) shift; shift; exec "$TEST_RUBY" "$@" ;;
@@ -49,16 +53,25 @@ Dir.mktmpdir("ccworks-ci-test") do |temporary|
   SH
   (bin/"brew").chmod(0755)
   (bin/"ccworks").chmod(0755)
-  %w[success install_failure test_failure missing_bottle wrong_version].each do |scenario|
+  %w[success intel_success intel_dependency_failure install_failure test_failure missing_bottle
+     wrong_version].each do |scenario|
     bottle = directory/"ccworks--0.7.0_1.fixture.bottle.json"
     bottle.unlink if bottle.exist?
-    environment = { "PATH" => "#{bin}:#{ENV.fetch("PATH")}", "TEST_SCENARIO" => scenario,
+    calls = directory/"calls.log"
+    calls.write("")
+    environment = { "TEST_CALLS" => calls.to_s,
+                    "CCWORKS_BUILD_DEPS_FROM_SOURCE" => scenario.start_with?("intel_").to_s,
+                    "PATH" => "#{bin}:#{ENV.fetch("PATH")}", "TEST_SCENARIO" => scenario,
                     "TEST_RUBY" => RbConfig.ruby }
     output, error, status = Open3.capture3(environment, "/bin/bash", (directory/"verify.sh").to_s,
                                            chdir: directory.to_s)
-    expected = scenario == "success"
+    expected = %w[success intel_success].include?(scenario)
     raise "#{scenario} returned an incorrect status: #{output} #{error}" if status.success? != expected
     raise "Success must be explicit" if expected && output.exclude?("PASS: ccworks source install")
+
+    if scenario == "intel_success" && calls.read.exclude?("install --verbose --build-from-source openssl@3 python@3.12")
+      raise "Intel must prebuild missing dependency bottles from source"
+    end
 
     puts "PASS: CI verification #{scenario}"
   end

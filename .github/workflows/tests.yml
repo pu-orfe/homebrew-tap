@@ -80,8 +80,20 @@ jobs:
       - name: Verify ccworks source install and bottle
         working-directory: ${{ steps.set-up-homebrew.outputs.repository-path }}
         if: steps.changes.outputs.ccworks == 'true'
+        env:
+          CCWORKS_BUILD_DEPS_FROM_SOURCE: ${{ runner.os == 'macOS' && runner.arch == 'X64' }}
         run: |
           set -euo pipefail
+          if [[ "${CCWORKS_BUILD_DEPS_FROM_SOURCE:-false}" == "true" ]]; then
+            ccworks_dependencies="$(brew deps --include-build --recursive pu-orfe/tap/ccworks)"
+            ccworks_source_dependencies=()
+            while IFS= read -r dependency; do
+              [[ -n "$dependency" ]] || continue
+              ccworks_source_dependencies+=("$dependency")
+            done <<< "$ccworks_dependencies"
+            (( ${#ccworks_source_dependencies[@]} > 0 ))
+            brew install --verbose --build-from-source "${ccworks_source_dependencies[@]}"
+          fi
           if brew list --versions pu-orfe/tap/ccworks >/dev/null 2>&1; then
             brew uninstall --force --ignore-dependencies pu-orfe/tap/ccworks
           fi
