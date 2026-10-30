@@ -7,6 +7,11 @@ class Ccworks < Formula
   sha256 "9dc9bb60d25d925073880641feed8dd95dec7140004dc1ad33f3fff35436d7ad"
   license "MIT"
 
+  bottle do
+    root_url "https://github.com/pu-orfe/homebrew-tap/releases/download/ccworks-0.7.0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "18b6587089130ead6000e99d9a41b9ca781a38c463cf6dc7e539a97727d94fbb"
+  end
+
   depends_on "python@3.12"
 
   # Homebrew's install sandbox blocks pip's outbound network, so every dep
