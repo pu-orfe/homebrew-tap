@@ -3,8 +3,8 @@ class Ccworks < Formula
 
   desc "SAP Concur browser-automation and API helper"
   homepage "https://github.com/pu-shd/ccworks"
-  url "https://github.com/pu-shd/ccworks/archive/refs/tags/v0.6.1.tar.gz"
-  sha256 "c934aeb4ee75e5d96aa7d058d2b82ee6f33bd327641604d87332cfcccc06f624"
+  url "https://github.com/pu-shd/ccworks/archive/refs/tags/v0.7.0.tar.gz"
+  sha256 "9dc9bb60d25d925073880641feed8dd95dec7140004dc1ad33f3fff35436d7ad"
   license "MIT"
 
   depends_on "python@3.12"
@@ -42,58 +42,58 @@ class Ccworks < Formula
 
   # --- ccworks runtime dependencies ---
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/0b/a7/71ac2cff56fec219ed242bb11b8efb69fcc4bec75db06fb7bfe35de520e6/certifi-2026.7.22-py3-none-any.whl"
-    sha256 "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775"
+    url "https://files.pythonhosted.org/packages/32/d1/a3652fe2c19134d0d15922177821d863cbd7e842d53a21bbe7e8e3a1b5ac/certifi-2026.10.23-py3-none-any.whl"
+    sha256 "e9b54de76e530bb6cf0ccd036787103acb58fd42ba930ea8bf948ddbaa2f61d1"
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/98/2b/f97f1c193fb855c345d678f5077d6926034db0722df74c8f057020e05a25/charset_normalizer-3.4.9-py3-none-any.whl"
-    sha256 "68e5f26a1ad57ded6d1cfb85331d1c1a195314756471d97758c48498bb4dcdf5"
+    url "https://files.pythonhosted.org/packages/fc/ad/d07d7862a62ffa6d79d68074d14823243dd235a77c45262acbf6adeb28bf/charset_normalizer-3.5.2-py3-none-any.whl"
+    sha256 "b6b751274acb69d77b3323d6b7dbaa3c7fdfc1eb829b7eb61d262f32e1af9685"
   end
 
   # greenlet has C extensions — per (OS, arch) wheel keyed to cp312.
   resource "greenlet" do
     on_macos do
-      url "https://files.pythonhosted.org/packages/f3/04/81bd731d6d1e3a469d9a4c36f5eb069bcf0cbb2d5d342c9fec22245b91fc/greenlet-3.5.4-cp312-cp312-macosx_11_0_universal2.whl"
-      sha256 "3d66250e8b09f182ede05490998c818b5961f7a3640332d44c4927caec7bbfe4"
+      url "https://files.pythonhosted.org/packages/72/18/3fc6d951466ae9a2a688edcddde3b2e388da0a8244e0caf7117bbeb0eb95/greenlet-3.5.6-cp312-cp312-macosx_11_0_universal2.whl"
+      sha256 "a5876d0a60355af98d535c47f6cd6eb0f8a432396dab26845d380b92f8412422"
     end
     on_linux do
       on_arm do
-        url "https://files.pythonhosted.org/packages/cc/dd/f5f22903a6ae70f5ea328ed0beaec92ad903f0e3b7d2845133b354abc4b8/greenlet-3.5.4-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl"
-        sha256 "c90e930c9c192e5b3ee9fb8bcd920ea3926155e2e3ded39fc697323addecee17"
+        url "https://files.pythonhosted.org/packages/27/89/366d2af5061eeefa5012f510d95a99c8620dcc457609838db4d538820318/greenlet-3.5.6-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl"
+        sha256 "e85880b538e59a59f55117b81f208a6660ad5ac328aad9305f812d9b8bc67a0f"
       end
       on_intel do
-        url "https://files.pythonhosted.org/packages/50/6d/0b14bb9db2989f32cd9fe7f76afedea01ee8bee3f87c07e69f24adfe7e63/greenlet-3.5.4-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl"
-        sha256 "f88193799d43dbf8c8a806d6405c9c52fe2af40bf75072a606357b33cc336c7f"
+        url "https://files.pythonhosted.org/packages/66/6a/1594f3869c57c149abdb380492529e04d4c0229b5e4d79572c5bd0aaa673/greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl"
+        sha256 "975736b002ed080d124cf81a79cb7e05cb26d6b3f5c7a7b651c0fcce70353aa1"
       end
     end
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/1e/5e/d4e9f1a599fb8e573b7b87160658329fbf28d19eac2718f51fc3def3aa5a/idna-3.18-py3-none-any.whl"
-    sha256 "7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2"
+    url "https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl"
+    sha256 "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c"
   end
 
   # playwright ships wheels only (bundled node driver binary is per-OS/arch).
   resource "playwright" do
     on_macos do
       on_arm do
-        url "https://files.pythonhosted.org/packages/42/35/71395dd3ecc798965be4a3ef8c443217d4abca168e7cb34536304f9489e6/playwright-1.61.0-py3-none-macosx_11_0_arm64.whl"
-        sha256 "009588c2a7e499bc5a8b425b61fa65490968bbda9cd69e0cf2cff10f8304659a"
+        url "https://files.pythonhosted.org/packages/72/4f/572bbbe60a5787ca61a84bad934c3ce19c08c2bc9c0e9781bf0d99cad1a6/playwright-1.64.1-py3-none-macosx_11_0_arm64.whl"
+        sha256 "59f7b041284ce8d1b72098ae50ca48a2d83692eec25154ab5ba79d4b6b4fe8a9"
       end
       on_intel do
-        url "https://files.pythonhosted.org/packages/44/ee/31e4e0db36588b817a10b299a0285082545fde7d36543c2abe498bb3d61a/playwright-1.61.0-py3-none-macosx_10_13_x86_64.whl"
-        sha256 "ff138c3a604f69911e9d42fd036e55c2a171e5616edf04c1e7f60a2a285540b0"
+        url "https://files.pythonhosted.org/packages/8d/c8/cc677856d89a0c077673b40ab915ed5597bf1347b205cabe70121c431ca9/playwright-1.64.1-py3-none-macosx_10_13_x86_64.whl"
+        sha256 "29453ff76e25c17d0b45658cacd6b92e9eec46e8db21e134fb3b7143df50f013"
       end
     end
     on_linux do
       on_arm do
-        url "https://files.pythonhosted.org/packages/b7/eb/e3f922348ec17c315f98c463f72faa1181a1c3de0bfe31a8d2edf6561723/playwright-1.61.0-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl"
-        sha256 "93454322ade8c11d5d6c211bfd91bdfb9ffb4810e3e026371bcbc4bec1b7ee4c"
+        url "https://files.pythonhosted.org/packages/0c/11/545f25e47ec54e1e8a2892ef9994fc2b298f909ab37b88578e3a1f87ac2e/playwright-1.64.1-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl"
+        sha256 "a29fda44725e11b0b625c4bff6458a1f6dbee97b88c9788d12e18a8344458c2d"
       end
       on_intel do
-        url "https://files.pythonhosted.org/packages/ab/f8/a35bf179e4ba2522c1893635094a64e407572547bd61528820fc0abc87fe/playwright-1.61.0-py3-none-manylinux1_x86_64.whl"
-        sha256 "54f3b39f6eab832e33458c1dd7da0b5682aedab3b09ae731b5c59fa12fd2024e"
+        url "https://files.pythonhosted.org/packages/15/b9/e481a34572933b5cf179d5637c98da488c732ee339dff5b73a0624d2e42b/playwright-1.64.1-py3-none-manylinux1_x86_64.whl"
+        sha256 "577b8d88778c245cfbd145ae17cf53044f084b1b46c55c69081d4069d56057e2"
       end
     end
   end
@@ -104,8 +104,8 @@ class Ccworks < Formula
   end
 
   resource "python-dotenv" do
-    url "https://files.pythonhosted.org/packages/0b/d7/1959b9648791274998a9c3526f6d0ec8fd2233e4d4acce81bbae76b44b2a/python_dotenv-1.2.2-py3-none-any.whl"
-    sha256 "1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a"
+    url "https://files.pythonhosted.org/packages/60/d1/38f3a3405989a89ac18390803e70c6ad7c7760da4f9b83cbeca0c44a0c72/python_dotenv-1.2.4-py3-none-any.whl"
+    sha256 "42269a8a5b3fd54ffa6f3d84b18abed50064717576b4ecf03dc4a55d8aa04fdc"
   end
 
   resource "requests" do
@@ -119,8 +119,8 @@ class Ccworks < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl"
-    sha256 "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897"
+    url "https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl"
+    sha256 "0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3"
   end
 
   def install
@@ -182,6 +182,10 @@ class Ccworks < Formula
     output = shell_output("#{bin}/ccworks 2>&1")
     assert_match "usage:", output
     assert_match "report list", output
+
+    bulk_help = shell_output("#{bin}/ccworks txn allocate-bulk --help")
+    assert_match "--dry-run", bulk_help
+    assert_match "--indices", bulk_help
 
     # Retired flat names exit 2 and name their replacement.
     legacy = shell_output("#{bin}/ccworks query-old 2>&1", 2)
