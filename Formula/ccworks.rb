@@ -3,17 +3,9 @@ class Ccworks < Formula
 
   desc "SAP Concur browser-automation and API helper"
   homepage "https://github.com/pu-shd/ccworks"
-  url "https://github.com/pu-shd/ccworks/archive/refs/tags/v0.7.0.tar.gz"
-  sha256 "9dc9bb60d25d925073880641feed8dd95dec7140004dc1ad33f3fff35436d7ad"
+  url "https://github.com/pu-shd/ccworks/archive/refs/tags/v0.7.1.tar.gz"
+  sha256 "fe4bfdde45c7ddb82777435566937d979a536878419974186ec18a25e7d40a5e"
   license "MIT"
-  revision 1
-
-  bottle do
-    root_url "https://github.com/pu-orfe/homebrew-tap/releases/download/ccworks-0.7.0_1"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "e0976aec677be3eb220c6f6bf5706ecd8b18e7dd06ed7b55977d603e9f229b95"
-    sha256 cellar: :any_skip_relocation, sequoia:      "9f22979338b13c15c3eac1dac0e1c3363df31ca70e48de207d1f2db4e469d64d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "e632fbfa454276939a0c441136ccf4b34aa02cfc4372ef35da7e2915e0faf695"
-  end
 
   depends_on "python@3.12"
 
